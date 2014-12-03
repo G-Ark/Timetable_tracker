@@ -20,17 +20,15 @@
     </script>
 
 <?php
-	include "include-must.php";
+	include "navigation.php";
 ?>
+<head>
+   <title>Edit</title>
+</head>
 
 <body>
     <div id="wrapper">
-        <!-- Navigation -->
-        <?php
-		include "menu-must.php";
-		?>
         <div id="page-wrapper">
-
             <div class="container-fluid">
 
                 <!-- Page Heading -->
@@ -41,10 +39,10 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.php">Home</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-file"></i>Edit
+                                <i class="fa fa-file"></i> Edit
                             </li>
                         </ol>
                     </div>

@@ -1,8 +1,16 @@
 <?php
-	include "include-must.php";
-		?>
-        <div id="page-wrapper">
+	include "navigation.php";
+?>
 
+<html lang="en">
+
+<head>
+    <title>Upload</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="page-wrapper">
             <div class="container-fluid">
 
                 <!-- Page Heading -->
@@ -13,7 +21,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.php">Home</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-file"></i> Upload

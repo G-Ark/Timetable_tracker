@@ -1,20 +1,27 @@
 <?php
-	include "include-must.php";
+	include "navigation.php";
 ?>
+<html>
 
+<head>
+   <title>Time Table tracker</title>
+</head>
+
+<body>
+    <div id="wrapper">
         <div id="page-wrapper">
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            <img src = "images/RVCE_New_Logo.jpg"></img>
-                            R.V College of Engineering
-                            <small align = "right">Department of ISE </small>
+                           
+                            Time table tracker and Report Generator<br>
+                            <small align = "right">Department of ISE, RVCE </small>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Home Page</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.php">Home Page</a>
                             </li>
                         </ol>
                     </div>
@@ -22,7 +29,7 @@
 
                     
                     
-                    <img class="img-thumbnail" src="images/webbanner.png"></img><br><br>
+                    
                     <img class="img-thumbnail" src="images/img02.png"></img>
                     <img class="img-thumbnail" src="images/img03.png"></img>
                     <img class="img-thumbnail" src="images/img04.png"></img>

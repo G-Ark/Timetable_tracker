@@ -1,16 +1,14 @@
 <?php
-	include "include-must.php";
+	include "navigation.php";
 ?>
+<html>
+<head>
+   <title>Download</title>
+</head>
 
 <body>
     <div id="wrapper">
-        <!-- Navigation -->
-        <?php
-		include "menu-must.php";
-		?>
-         <!-- End of Navigation -->
         <div id="page-wrapper">
-
             <div class="container-fluid">
 
                 <!-- Page Heading -->
@@ -21,13 +19,13 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.php">Home</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-file"></i>Download
+                                <i class="fa fa-file"></i> Download
                             </li>
                             <li class="active">
-                                <i class="fa fa-file"></i>Download by sem
+                                <i class="fa fa-file"></i> Download by sem
                             </li>
                         </ol>
                     </div>
@@ -60,6 +58,9 @@
                             
                             
                             <div class="panel-body">
+                                <div class="alert alert-info">
+                                    <strong>Heads Up:</strong> The timetables generated will be stored in "**" folder with initials.
+                                </div>
                                 <div class="form-group">
                                     <label>Sem:</label>
                                         <select class="form-control">

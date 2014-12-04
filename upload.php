@@ -1,5 +1,9 @@
 <?php
-	include "navigation.php";
+    ob_start();
+    session_start();
+    if(isset($_SESSION['sess_username']))
+    {
+	   include "navigation.php";
 ?>
 
 <html lang="en">
@@ -34,6 +38,7 @@
                 <div class="alert alert-warning">
                     <strong>Warning!</strong> <a style= "color:red" href = "uploads/template.xlsx"> Before uploading have a look at our template! </a>
                 </div>
+                <!--Warning and Red font to look for template before uploading -->
 
                 <form method="post" name="loginform" action="upload-validation.php" enctype="multipart/form-data">
                 <div class="panel panel-default">
@@ -55,19 +60,20 @@
                                             }
                                             mysqli_close($con);
                                             ?>
+                                            <!-- PHP script to dynamically get values from db for sem values -->
                                         </select>
                                 </div>
 
                               
                                 <div class="form-group">
                                     <label>Select a file :</label>
-                                <input type="file" name = "file" id = "file">
+                                    <input type="file" name = "file" id = "file">
                                 </div>
                                 
 
                                 <button type="submit" class="btn btn-default">Submit</button>
                             </div>
-                        </div>
+                </div>
                 </form>
                 
 
@@ -89,3 +95,9 @@
 </body>
 
 </html>
+<?php
+    }
+    //if not logged in redirect to login page
+    else
+    header('Refresh:0,url= login.php');
+?>

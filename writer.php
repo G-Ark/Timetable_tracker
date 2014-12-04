@@ -21,12 +21,11 @@ if (mysqli_connect_errno())
 
 //get data from form
 $teacher=$_GET['teacher'];
-echo "teacher=".$teacher;
 
-	$teacher="%".$teacher."%";
-	$query="SELECT * from class where sub IN (select sub from handles where name like '$teacher')";
-	$result=mysqli_query($con,$query);
-
+//query from database and show error
+$teacher="%".$teacher."%";
+$query="SELECT * from class where sub IN (select sub from handles where name like '$teacher')";
+$result=mysqli_query($con,$query);
 if($result === FALSE) 
 {
 	die(mysql_error()); // TODO: better error handling
@@ -44,12 +43,14 @@ else if(isset($result) and $result != FALSE)
 			$end_time=date('g:i', strtotime($row['end_time']));
 			$subject=$row['sub'];
 			$day=$row['day'];
+			$sem=$row['sem'];
+			$subject=$subject."(".$sem.")";
 			write_to_file($start_time,$end_time,$day,$subject); //to define a function for this
 		}//end while
 	}//end num_rows >0 condition
 }//end set of result
 
-//function to write
+//function to write to Excel file and sheet
 function write_to_file($start,$end,$day,$matter)
 {
 	$teacher=$_GET['teacher'];
@@ -60,11 +61,11 @@ function write_to_file($start,$end,$day,$matter)
 	switch($day)
 	{
 		case 'MON':$row=4;break;
-		case 'TUE':$row=5;break;
-		case 'WED':$row=6;break;
-		case 'THU':$row=7;break;
-		case 'FRI':$row=8;break;
-		case 'SAT':$row=9;break;
+		case 'TUE':$row=6;break;
+		case 'WED':$row=8;break;
+		case 'THU':$row=10;break;
+		case 'FRI':$row=12;break;
+		case 'SAT':$row=14;break;
 	}
 
 	switch($start)
@@ -76,13 +77,15 @@ function write_to_file($start,$end,$day,$matter)
 		case '2:15':$col='H';break;
 		case '3:15':$col='I';break;
 		
-		case '11:15':$col='D';break;
-		case '12:05':$col='E';break;
-		case '12:55':$col='F';break;
-		case '2:20':$col='H';break;
-		case '3:10':$col='H';break;
+		//in case of 7th sem time enter values to one cell below
+		case '11:15':$col='D';$row++;break;
+		case '12:05':$col='E';$row++;break;
+		case '12:55':$col='F';$row++;break;
+		case '2:20':$col='H';$row++;break;
+		case '3:10':$col='H';$row++;break;
 	}
 	$cell=$col.$row;
+	//get matches for labs and merge cells accordingly
 	if(preg_match("/\(/",$matter))
 	{
 		$cols=$cell;
@@ -96,7 +99,7 @@ function write_to_file($start,$end,$day,$matter)
 	$fname="PersonalTT/".$teacher.".xlsx";
 	$objWriter->save($fname);
 }
-header("Refresh:0,url=create.php");
+header("Refresh:0,url=downloadteach.php");
 ?>
 <script>
 	alert("Your personalised timetable has been added!");

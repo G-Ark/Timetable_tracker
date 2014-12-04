@@ -1,19 +1,28 @@
 <?php
     include "navigation.php";
 ?>
-
 <html lang="en">
 <head>
     <title> View </title>
 </head>
+<script>
+    function checkAndSubmit()
+    {
+        
+        if (document.getElementById('lab').selectedIndex > 0)
+        {
+      //document.getElementById('formID').submit();
+            document.getElementById('lab-form').submit();
+            
+            
+        }
+    }
+</script>
 
 <body>
-
     <div id="wrapper">
         <div id="page-wrapper">
-
             <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -35,36 +44,119 @@
                 </div>
                 <!-- /.row -->
 
-                 <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">View labs being conducted right now:</h3>
-                            </div>
-                            <div class="panel-body">
-                                <select class = "form-control" name="subject" id="subject" onclick="checkAndSubmit()">
-                                 <option value=0>Select a Lab</option>
+                <?php
+                    if(isset($_POST['lab']))
+                    {
+                        //connect to database
+                        $con=mysqli_connect("localhost","root","","timetable");
+                        if (mysqli_connect_errno())
+                        {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                            exit();
+                        }
+
+                        //get form data
+                        @$subject=$_POST['lab'];
+                        echo "The details for labs in ".$subject." are:<br/><br/>";
+        
+                        //execute query if form data is set and report failure if any
+                        if($subject)
+                        {
+                            $subject="%".$subject."("."%";
+                            $query="SELECT c.sem,c.start_time,c.end_time,c.sub,c.day,h.name,s.name as teach from class as c,handles as h,handles as s where c.sub LIKE '$subject' and h.sub=c.sub and h.sub=s.sub and h.name!=s.name;";
+                            $result=mysqli_query($con,$query);
+                        }
+                        if($result === FALSE) 
+                        {
+                            die(mysql_error()); // TODO: better error handling
+                        }
+                        
+                        else if(isset($result) and $result != FALSE)
+                        {                       
+                            $num_rows = $result->num_rows;
+                            if($num_rows>0)
+                            {
+                            ?>
+                                <div class="table-responsive">
+                                <table class="table table-hover">
+                                    
+                                <thead>
+                                    <tr>
+                                        <th>Sem</th>
+                                        <th>Start Time</th>
+                                        <th>End time</th>
+                                        <th>Subject</th>
+                                        <th>Day</th>
+                                        <th>Teacher1</th>
+                                        <th>Teacher2</th>
+                                    </tr>
+                                </thead>
+
+                            <?php
+                            while($row = mysqli_fetch_assoc($result))
+                            {
+                                $row = mysqli_fetch_assoc($result);
+                                echo "<tr>";
+                                echo "<td valign=middle align=center>" . $row['sem'] . "</td>";
+                                $start=date('g:i', strtotime($row['start_time']));
+                                echo "<td valign=middle align=center>" . $start . "</td>";
+                                $end=date('g:i', strtotime($row['end_time']));
+                                echo "<td valign=middle align=center>" . $end . "</td>";
+                                echo "<td valign=middle align=center>" . $row['sub'] . "</td>";
+                                echo "<td valign=middle align=center>" . $row['day'] . "</td>";
+                                echo "<td valign=middle align=center>" . $row['name'] . "</td>";
+                                echo "<td valign=middle align=center>" . $row['teach'] . "</td>";
+                                echo "</tr>";
+                            }
+                            echo "</table>";
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                        else
+                        echo "No entries!";
+                    }
+                    else
+                    echo "No entries!";
+                    mysqli_close($con); 
+                }
+                else
+                {
+               ?>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">View labs being conducted right now:</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action="" id="lab-form">
+                            <select class = "form-control" name="lab" id="lab" onclick="checkAndSubmit()">
+                                <option value=0>Select a Lab</option>
                                     <?php
                                         $con=mysqli_connect("localhost","root","","timetable");
-                                         $query="SELECT distinct sub from class;";
-                                         $result=mysqli_query($con,$query);
+                                        $query="SELECT distinct sub from class;";
+                                        $result=mysqli_query($con,$query);
                                         $test="";
-                    
+                        
                                         while ($row=mysqli_fetch_assoc($result)) 
-                                         {
-                                                $sub=preg_split("/\(/",$row['sub']);
-                                                if(isset($sub[1]) and $sub[0]!=$test)
-                                                {
-                                                 echo "<option value=".$sub[0].">".$sub[0]."</option>";
-                                                 $test=$sub[0];
-                                                    }
+                                        {
+                                            $sub=preg_split("/\(/",$row['sub']);
+                                            if(isset($sub[1]) and $sub[0]!=$test)
+                                            {
+                                                echo "<option value=".$sub[0].">".$sub[0]."</option>";
+                                                $test=$sub[0];
+                                            }
                                         }
                                     ?>
-                                </select>
-                                
-                            </div>
-                 </div>
+                            </select>
+                        </form>
+                    </div>
+                </div>
 
                  </div>
             <!-- /.container-fluid -->
+            <?php
+                }
+            ?>
 
         </div>
         <!-- /#page-wrapper -->
@@ -77,7 +169,5 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
 </body>
-
 </html>

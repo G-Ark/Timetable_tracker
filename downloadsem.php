@@ -1,4 +1,8 @@
 <?php
+    ob_start();
+    session_start();
+    if(isset($_SESSION['sess_username']))
+    {
 	include "navigation.php";
 ?>
 <html>
@@ -35,6 +39,7 @@
                             <?php
                                 if(isset($_POST['download'])) 
                                 {
+                                    
                                     $sem=$_POST["sem"];
                                     $fname="uploads/".$sem."sem_tt".".xlsx";
                                     if(file_exists($fname)){
@@ -43,41 +48,37 @@
                                      else
                                         echo "No such file!";
                                 }
-                                elseif(isset($_POST['teacher']))
-                                {
-                                     header("Refresh:0,url= create.php?teacher=".$teacher);
-                                }
                             ?>
+                <!-- PHP script to download file if submit pressed and file exists.Else diaplay suitable message -->
 
-                 <form method="post" action="" enctype="multipart/form-data">
+                 <form method="post" action="" enctype="multipart/form-data" name="sem1">
                     <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Select the semester for which you want to download timetable:</h3>
                             </div>
-                           
-                            
-                            
+                             
                             <div class="panel-body">
                                 <div class="alert alert-info">
                                     <strong>Heads Up:</strong> The timetables generated will be stored in "**" folder with initials.
                                 </div>
                                 <div class="form-group">
                                     <label>Sem:</label>
-                                        <select class="form-control">
-                                            <option>Sem</option>
+                                        <select class="form-control" onchange="checkAndSubmit()" name="sem">
+                                            <option value=0>Sem</option>
                                             <?php
                                             $con=mysqli_connect("localhost","root","","timetable");
-                                            $query="select name from sem;";
+                                            $query="select distinct sem from class;";
                                             $result=mysqli_query($con,$query);
                                             while($row=mysqli_fetch_assoc($result))
                                             {
-                                             echo "<option value =".$row['name'].">".$row['name']."</option>";
+                                             echo "<option value =".$row['sem'].">".$row['sem']."</option>";
                                             }
                                             mysqli_close($con);
                                             ?>
                                         </select>
+                                        <!-- PHP script to get sem values from database and from "class" table in db-->
                                 </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="submit" class="btn btn-default" name="download">Submit</button>
                             </div>
                         </div>
                 </form>
@@ -101,3 +102,7 @@
 </body>
 
 </html>
+<?php
+    }
+    else
+        header('Refresh:0,url=login.php');

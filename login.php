@@ -6,7 +6,12 @@
 <head>
     <title>Login</title>
 </head>
-
+<?php
+    if(isset($_SESSION['sess_username']))
+        echo "You can log out from the top right corner button!";
+    else
+    {   
+?>
 <body>
     <div id="wrapper">
         <div id="page-wrapper">
@@ -37,12 +42,12 @@
                             </div>
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <form method="post" action="">
-                                        <input type="text" class="form-control" placeholder="Username" name="start" required>
+                                    <form method="post" action="login_validation.php">
+                                        <input type="text" class="form-control" placeholder="Username" name="uname" required>
                                 </div>
                                
                                 <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" name="start" required>
+                                        <input type="password" class="form-control" placeholder="Password" name="pass" required>
                                 </div>
                                     
                                
@@ -50,12 +55,7 @@
                                 <button class="btn btn-default" name="check" onclick="checkAndSubmit()">Submit</button>
                                 </div>
                                     </form>
-                            </div> 
-
-                     
-
-                             
-
+                            </div>
                               
             </div>
             <!-- /.container-fluid -->
@@ -73,6 +73,8 @@
     <script src="js/bootstrap.min.js"></script>
 
 </body>
-
-</html>
+<?php
+    }
+?>
+</html><!--End of html doc-->
         

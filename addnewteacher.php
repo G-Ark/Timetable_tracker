@@ -1,4 +1,8 @@
 <?php
+    ob_start();
+    session_start();
+    if(isset($_SESSION['sess_username']))
+    {
 	include "navigation.php";
 ?>
 <head>
@@ -39,24 +43,24 @@
                              <div class="panel-body">
                                 <form action = "" method = "post">
                                 <div class="form-group">
-                                <label>First Name:</label>
-                                <input class="form-control" name = "fn" placeholder="FN">
+                                    <label>First Name:</label>
+                                    <input class="form-control" name = "fn" placeholder="FN">
                                 </div>
                                 <div class="form-group">
-                                <label>Last Name:</label>
-                                <input class="form-control" name = "ln" placeholder="LN">
+                                    <label>Last Name:</label>
+                                    <input class="form-control" name = "ln" placeholder="LN">
                                 </div>
                                 <div class="form-group">
-                                <label>Initials:</label>
-                                <input class="form-control" name = "sn" placeholder="INI">
+                                    <label>Initials:</label>
+                                    <input class="form-control" name = "sn" placeholder="INI">
                                 </div>
                                 <div class="form-group">
-                                <label>Email ID:</label>
-                                <input class="form-control" name = "mail" placeholder="E-mail">
+                                    <label>Email ID:</label>
+                                    <input class="form-control" name = "mail" placeholder="E-mail">
                                 </div>
                                 <div class="form-group">
-                                <label>Phone Number:</label>
-                                <input class="form-control" name = "phone" placeholder="Phone">
+                                    <label>Phone Number:</label>
+                                    <input class="form-control" name = "phone" placeholder="Phone">
                                 </div>
                             <button type="submit" class="btn btn-default">Submit</button>
                                   
@@ -67,28 +71,32 @@
                </div>
                 
                  <?php
-                                /* $fname=$_POST['fn'];
-                    $lname=$_POST['ln'];
-                    $sname=$_POST['sn'];
-                    $email=$_POST['mail'];
-                    $phone=$_POST['phone'];
-                    $con=mysqli_connect("localhost","root","","timetable");
-                    if (mysqli_connect_errno())
+                    if(isset($_POST['fn']))
                     {
-                        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                        exit();
-                    }
-                    $query="Insert into login values('$fname','$lname','$sname','NULL','NULL','$email','$phone');";
-                    $result=mysqli_query($con,$query);
-                    mysqli_close($con);     
-                                */ 
-                ?> 
-                    
-                                
-                        
+                        //get values from form
+                        $fname=$_POST['fn'];
+                        $lname=$_POST['ln'];
+                        $sname=$_POST['sn'];
+                        $email=$_POST['mail'];
+                        $phone=$_POST['phone'];
 
-                
-                </div>
+                        //enable connection to db and report error if failure
+                        $con=mysqli_connect("localhost","root","","timetable");
+                        if (mysqli_connect_errno())
+                        {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                            exit();
+                        }
+
+                        //execute query
+                        $query="Insert into login values('$fname','$lname','$sname','NULL','NULL','$email','$phone');";
+                        $result=mysqli_query($con,$query);
+                        mysqli_close($con);
+
+                        //display message     
+                    }
+                ?> 
+                <!-- PHP script to insert details of teacher into database -->
 
             </div>
             <!-- /.container-fluid -->
@@ -108,3 +116,8 @@
 </body>
 
 </html>
+<?php
+     }//if not logged in redirec to login page
+    else
+    header('Refresh:0,url=login.php');
+?>   

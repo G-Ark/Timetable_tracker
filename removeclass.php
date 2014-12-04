@@ -1,4 +1,8 @@
 <?php
+    ob_start();
+    session_start();
+    if(isset($_SESSION['sess_username']))
+    {
 	include "navigation.php";
 ?>
 <head>
@@ -23,54 +27,58 @@
                             <li class="active">
                                 <i class="fa fa-file"></i> Remove
                             </li>
-                             <li class="active">
+                            <li class="active">
                                 <i class="fa fa-file"></i> Remove a Class
                             </li>
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
-
+                
+                <?php
+                    $con=mysqli_connect("localhost","root","","timetable");
+                    if(isset($_POST['sel']))
+                    {
+                        $sem=$_POST['sel'];
+                        $query="DELETE from sem where name='$sem';";
+                        $result=mysqli_query($con,$query);
+                        if($result)
+                        echo "SEt!";   //display message;
+                    }
+                ?>
+                <!-- PHP script to remove ebtries from sem table in database -->
                 
                 <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Remove a sem and section from the department: </h3>
-                            </div>
-                             <div class="panel-body">
-                                <div class="alert alert-warning">
-                                    <strong>Warning!</strong> You are removing a semester and section from the department.
-                                 </div>
-                                <form action = "" method = "post">
-                                <form method="post" action="">
-                                 <div class="form-group">
-                                    <div class="input-group">
-                                         <select class = "form-control" name="sel" id="sel" onclick="checkAndSubmit()">
-                                         <option value=0>Semester</option>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Remove a sem and section from the department: </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="alert alert-warning">
+                            <strong>Warning!</strong> You are removing a semester and section from the department.
+                        </div>
+                        <form action = "" method = "post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select class = "form-control" name="sel" id="sel" onclick="checkAndSubmit()">
+                                        <option value=0>Semester</option>
                                         <?php                   
-                                             $con=mysqli_connect("localhost","root","","timetable");
-                                             $query="SELECT distinct sem from class;";
+                                             $query="SELECT distinct name from sem;";
                                              $result=mysqli_query($con,$query);
 
                                             while ($row=mysqli_fetch_assoc($result)) 
                                             {
-                                                echo "<option value=".$row['sem'].">" . $row['sem'] . "</option>";
-                                             }
+                                                echo "<option value=".$row['name'].">" . $row['name'] . "</option>";
+                                            }
+                                            mysql_close();
                                         ?>
-                                         </select>
-                                    </div>
+                                        <!-- PHP script to get values from database to form from sem table -->
+                                    </select>
                                 </div>
-                            <button type="submit" class="btn btn-lg btn-danger">Remove</button>
-                                  
-                             </form>  
-                                
                             </div>
-                           
-               </div>
-                
-                
-                                
-                        
-
+                            <button type="submit" class="btn btn-lg btn-danger">Remove</button>
+                        </form>  
+                    </div>
+                </div>
                 
                 </div>
 
@@ -92,3 +100,8 @@
 </body>
 
 </html>
+<?php
+    }//if not logged in redirec to login page
+    else
+    header('Refresh:0,url=login.php');
+?>

@@ -1,4 +1,8 @@
 <?php
+    ob_start();
+    session_start();
+    if(isset($_SESSION['sess_username']))
+    {
 	include "navigation.php";
 ?>
 <head>
@@ -9,7 +13,31 @@
     <div id="wrapper">
         <div id="page-wrapper">
             <div class="container-fluid">
+               
+                 <?php
+                    if (isset($_POST['sem']) and isset($_POST['strength'])) 
+                    {
+                    
+                        //get values from form
+                        $class=$_POST['sem'];
+                        $str=$_POST['strength'];
 
+                        //get connection with dtaabase
+                        $con=mysqli_connect("localhost","root","","timetable");
+                        if (mysqli_connect_errno())
+                        {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                            exit();
+                        }
+                        
+                        //execute query
+                        $query="Insert into sem values('$class','$str');";
+                        $result=mysqli_query($con,$query);
+                        mysqli_close($con);
+                        //display message
+                    }
+                ?>
+                <!-- PHP script to insert a new class and sectio nto database -->
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -36,44 +64,20 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title">Add a new class to the department: </h3>
                             </div>
-                             <div class="panel-body">
+                            <div class="panel-body">
                                 <form action = "" method = "post">
                                 <div class="form-group">
-                                <label>Enter sem and section</label>
-                                <input class="form-control" name = "sem" placeholder="Sem and section">
+                                    <label>Enter sem and section</label>
+                                    <input class="form-control" name = "sem" placeholder="Sem and section">
                                 </div>
                                 <div class="form-group">
-                                <label>Enter Strength of the new class</label>
-                                <input class="form-control" name = "strength" placeholder="Strength">
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                                  
-                             </form>  
-                                
-                            </div>
-                           
+                                    <label>Enter Strength of the new class</label>
+                                    <input class="form-control" name = "strength" placeholder="Strength">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                </form>      
+                            </div>  
                </div>
-                
-                 <?php
-                                /* $class=$_POST['sem'];
-                                $str=$_POST['strength'];
-                                $con=mysqli_connect("localhost","root","","timetable");
-                                if (mysqli_connect_errno())
-                                {
-                                     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                                    exit();
-                                 }
-                                    $query="Insert into sem values('$class','$str');";
-                                    $result=mysqli_query($con,$query);
-                                    mysqli_close($con);
-                                */ 
-                ?> 
-                    
-                                
-                        
-
-                
-                </div>
 
             </div>
             <!-- /.container-fluid -->
@@ -93,3 +97,8 @@
 </body>
 
 </html>
+<?php
+    }//if not logged in redirec to login page
+    else
+    header('Refresh:0,url=login.php');
+?>

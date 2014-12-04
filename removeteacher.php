@@ -1,4 +1,8 @@
 <?php
+    ob_start();
+    session_start();
+    if(isset($_SESSION['sess_username']))
+    {
 	include "navigation.php";
 ?>
 <head>
@@ -31,7 +35,18 @@
                 </div>
                 <!-- /.row -->
 
-                
+                <?php
+                    $con=mysqli_connect("localhost","root","","timetable");
+                    if(isset($_POST['teacher']))
+                    {
+                        $teacher=$_POST['teacher'];
+                        $query="DELETE from login where short='$teacher';";
+                        $result=mysqli_query($con,$query);
+                        if($result)
+                        echo "Set!";    //display message;
+                    }
+                ?>
+                <!-- PHP script to remove entries from login table in database -->
                 <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Remove a faculty from the department: </h3>
@@ -47,12 +62,13 @@
                                             <option value=0>Choose a faculty initial</option>
                                             <?php
                                                     $con=mysqli_connect("localhost","root","","timetable");
-                                                    $query="SELECT DISTINCT name from handles;";
+                                                    $query="SELECT short from login;";
                                                     $result=mysqli_query($con,$query);
                                                     while($row=mysqli_fetch_assoc($result))
                                                     {
-                                                     echo "<option value=".$row['name'].">".$row['name']."</option>";
+                                                     echo "<option value=".$row['short'].">".$row['short']."</option>";
                                                     }
+                                                    mysqli_close();
                                             ?>
                                         </select>
                                     </div>
@@ -84,12 +100,8 @@
 </body>
 
 </html>
-
-                
-                
-                    
-                                
-                        
-
-                
-                
+<?php
+    }//if not logged in redirec to login page
+    else
+    header('Refresh:0,url=login.php');
+?>

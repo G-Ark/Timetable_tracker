@@ -1,8 +1,10 @@
 <?php
-	include "navigation.php";
-?>
-
-<?php
+    ob_start();
+    session_start();
+    if (isset($_SESSION['sess_username'])) 
+    {
+    	
+    include "navigation.php";
     if(isset($_POST['teacher']))
     {
         $con=mysqli_connect("localhost","root","","timetable");
@@ -11,48 +13,46 @@
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
             exit();
         }
-
+        //connect to databse established with suitable error reporting
         @$teacher=$_POST['teacher'];
-        echo "The details for classes being taken by ".$teacher." are:<br/><br/>";
-        if($teacher)
-        {
-            $teacher="%".$teacher."%";
-            $query="SELECT * from class where sub IN (select sub from handles where name like '$teacher')";
-            $result=mysqli_query($con,$query);
-        }
-                    
-        if($result === FALSE) 
-        {
-            die(mysql_error()); // TODO: better error handling
-        }
-                        
-        else if(isset($result) and $result != FALSE)
-        {                       
-            $num_rows = $result->num_rows;
-            if($num_rows>0)
-            {
-                echo "<table border='1' width=600><tr><th>Sem</th><th>Start Time</th><th>End Time</th><th>Subject</th><th>Day</th></tr>";
-                while($row = mysqli_fetch_assoc($result))
-                {
-                    echo "<tr>";
-                    echo "<td valign=middle align=center>" . $row['sem'] . "</td>";
-                    $start=date('g:i', strtotime($row['start_time']));
-                    echo "<td valign=middle align=center>" . $start. "</td>";
-                    $end=date('g:i', strtotime($row['end_time']));
-                    echo "<td valign=middle align=center>" . $end. "</td>";
-                    echo "<td valign=middle align=center>" . $row['sub'] . "</td>";
-                    echo "<td valign=middle align=center>" . $row['day'] . "</td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-            }
-            else
-            echo "No entries!";
-        }
-        else
-        echo "No entries!";
-        mysqli_close($con); 
-    }
+
+        error_reporting(E_ALL);
+
+        /** Include path **/
+        ini_set('include_path', ini_get('include_path').';../Classes/');
+
+        /** PHPExcel */
+        include 'Classes/PHPExcel.php';
+
+        /** PHPExcel_Writer_Excel2007 */
+        include 'Classes/PHPExcel/Writer/Excel2007.php';
+
+        // Create new PHPExcel object
+        $inputFileType = 'Excel2007';
+        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        $objPHPExcel = $objReader->load("PersonalTT/teacher_template.xlsx");
+
+        //Set a new sheet with suitable name
+        $newSheet = clone $objPHPExcel->getSheetByName("Sheet1");
+        $newSheet->setTitle($teacher);
+        $newSheetIndex = 0;
+        $objPHPExcel->addSheet($newSheet,$newSheetIndex);
+
+        // Set properties
+        $objPHPExcel->getProperties()->setCreator("Ganesh and Pawan");
+        $objPHPExcel->getProperties()->setLastModifiedBy("Automatic code");
+        $objPHPExcel->getProperties()->setTitle("Timetable tracker");
+        $objPHPExcel->getProperties()->setSubject("Office 2007 XLSX Test Document");
+        $objPHPExcel->getProperties()->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.");
+
+        // Rename sheet
+        $objPHPExcel->getActiveSheet()->setTitle('Simple');
+
+        //save file
+        $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+        $objWriter->save("PersonalTT/".$teacher.'.xlsx');
+        header("Refresh:1,url=writer.php?teacher=".$teacher);
+    }//end of isset of techer to create a new Excel file and sheet and pass to writer page
 ?>
 <html>
 <head>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Teacher:</label>
-                                        <select class="form-control">
+                                        <select class="form-control" name="teacher">
                                             <option>Teacher Initials</option>
                                             <?php
                                                 $con=mysqli_connect("localhost","root","","timetable");
@@ -113,6 +113,7 @@
                                                 }
                                             ?>
                                         </select>
+                                         <!-- PHP script to get teacher initials present in the database form handles class-->
                                 </div>
                                 <button type="submit" class="btn btn-default">Submit</button>
                             </div>
@@ -138,3 +139,9 @@
 </body>
 
 </html>
+<?php
+    }
+    //if not logged in redirect to login page
+    else
+        header('refresh:0,url=login.php');
+?>

@@ -207,7 +207,7 @@
                                 <select name="sub" id="sub" class = "form-control">
                                     <option value=0>Subject</option>
                                     <?php
-                                        $query="SELECT DISTINCT sub from class;";
+                                        $query="SELECT DISTINCT sub from class";
                                         $result=mysqli_query($con,$query);
                                         while ($row=mysqli_fetch_assoc($result)) 
                                         {

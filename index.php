@@ -15,9 +15,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                           
-                            Time table tracker and Report Generator<br>
-                            <small align = "right">Department of ISE, RVCE </small>
+                            Time Table Tracker and Report Generator<br>
+                            
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -27,31 +26,80 @@
                     </div>
                 </div>
 
-                    
-                    
-                    
-                    <img class="img-thumbnail" src="images/img02.png"></img>
-                    <img class="img-thumbnail" src="images/img03.png"></img>
-                    <img class="img-thumbnail" src="images/img04.png"></img>
-                    <img class="img-thumbnail" src="images/img05.png"></img>
-                    
-
-                  
-                    <div class="page-header">
-                    <h1>Quote for the day</h1>
-                </div>
-                <div class="well">
-                    <p> "You get to decide where your time goes. You can either spend it moving forward, or you can spend it putting out fires. You decide. And if you don't decide, others will decide for you."</p>
-                    <small> - Tony Morgan </small>
+                <div class="row">
+                    <div class="col-lg-12">
+                            <img class="img-thumbnail" src = "images/webbanner.png"></img>
+                    </div>
                 </div>
 
+                    <div class="row"></div>
+                    
+                    <div class="row">
+                    <div class="col-lg-3 text-center">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img class="img-thumbnail" src="images/img02.png"></img>
+                                <h4>Edit</h4>
+                                <h5> Easy to edit time tables as well as alert teachers just by the push of a button!</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                 <div class="row">
+                    <div class="col-lg-3 text-center">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img class="img-thumbnail" src="images/img03.png"></img>
+                                <h4>Download</h4>
+                                <h5>Download your time tables in excel formats on the go easily.</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                 
+                 <div class="row">
+                    <div class="col-lg-3 text-center">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img class="img-thumbnail" src="images/img04.png"></img>
+                                <h4>View</h4>
+                                <h5>Time tables to see, time tables to query and time tables made easy.</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+               
+                 <div class="row">
+                    <div class="col-lg-3 text-center">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img class="img-thumbnail" src="images/img05.png"></img>
+                                <h4>Delete</h4>
+                                <h5>Clean up after use and re-create for a new semester</h5>
+                                
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                               
+                               
+                               
+                              
+                 
+            </div>
             </div>
         </div>
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-	</body>
-	    <script src="js/jquery.js"></script>
+    </body>
+        <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -61,3 +109,25 @@
     <script src="js/plugins/morris/morris.min.js"></script>
     <script src="js/plugins/morris/morris-data.js"></script>
 </html>
+
+
+                               
+                             
+                          
+                    
+                   
+
+                    
+
+                          
+
+                   
+                              
+                           
+                    
+                    
+                    
+                    
+
+                  
+                  

@@ -43,7 +43,37 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">View labs being conducted right now:</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action="" id="lab-form">
+                            <select class = "form-control" name="lab" id="lab" onclick="checkAndSubmit()">
+                                <option value=0>Select a Lab</option>
+                                    <?php
+                                        $con=mysqli_connect("localhost","root","","timetable");
+                                        $query="SELECT distinct sub from class;";
+                                        $result=mysqli_query($con,$query);
+                                        $test="";
+                        
+                                        while ($row=mysqli_fetch_assoc($result)) 
+                                        {
+                                            $sub=preg_split("/\(/",$row['sub']);
+                                            if(isset($sub[1]) and $sub[0]!=$test)
+                                            {
+                                                echo "<option value=".$sub[0].">".$sub[0]."</option>";
+                                                $test=$sub[0];
+                                            }
+                                        }
+                                    ?>
+                            </select>
+                        </form>
+                    </div>
+                </div>
 
+                 </div>
+            <!-- /.container-fluid -->
                 <?php
                     if(isset($_POST['lab']))
                     {
@@ -96,6 +126,7 @@
                             while($row = mysqli_fetch_assoc($result))
                             {
                                 $row = mysqli_fetch_assoc($result);
+                            
                                 echo "<tr>";
                                 echo "<td valign=middle align=center>" . $row['sem'] . "</td>";
                                 $start=date('g:i', strtotime($row['start_time']));
@@ -123,37 +154,7 @@
                 {
                ?>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">View labs being conducted right now:</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form method="post" action="" id="lab-form">
-                            <select class = "form-control" name="lab" id="lab" onclick="checkAndSubmit()">
-                                <option value=0>Select a Lab</option>
-                                    <?php
-                                        $con=mysqli_connect("localhost","root","","timetable");
-                                        $query="SELECT distinct sub from class;";
-                                        $result=mysqli_query($con,$query);
-                                        $test="";
-                        
-                                        while ($row=mysqli_fetch_assoc($result)) 
-                                        {
-                                            $sub=preg_split("/\(/",$row['sub']);
-                                            if(isset($sub[1]) and $sub[0]!=$test)
-                                            {
-                                                echo "<option value=".$sub[0].">".$sub[0]."</option>";
-                                                $test=$sub[0];
-                                            }
-                                        }
-                                    ?>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-
-                 </div>
-            <!-- /.container-fluid -->
+                
             <?php
                 }
             ?>

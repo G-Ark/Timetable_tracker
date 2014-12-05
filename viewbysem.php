@@ -39,7 +39,36 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">View classes by semester</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action="" id="sem-form">
+                             <div class="form-group">
+                                <div class="input-group">
+                                    <select class = "form-control" name="sel" id="sel" onclick="checkAndSubmit()">
+                                    <option value=0>Semester</option>
+                                    <?php                   
+                                        //connect to database and query
+                                        $con=mysqli_connect("localhost","root","","timetable");
+                                        $query="SELECT distinct sem from class;";
+                                        $result=mysqli_query($con,$query);
+
+                                        //loop through query results to get select options
+                                        while ($row=mysqli_fetch_assoc($result)) 
+                                        {
+                                            echo "<option value=".$row['sem'].">" . $row['sem'] . "</option>";
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>        
+                    </div>
+
+                 </div>
+            <!-- /.container-fluid -->
                 <?php
                 include "navigation.php";
                 if(isset($_POST['sel']))
@@ -109,36 +138,7 @@
                 else
                 {
                 ?>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">View classes by semester</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form method="post" action="" id="sem-form">
-                             <div class="form-group">
-                                <div class="input-group">
-                                    <select class = "form-control" name="sel" id="sel" onclick="checkAndSubmit()">
-                                    <option value=0>Semester</option>
-                                    <?php                   
-                                        //connect to database and query
-                                        $con=mysqli_connect("localhost","root","","timetable");
-                                        $query="SELECT distinct sem from class;";
-                                        $result=mysqli_query($con,$query);
-
-                                        //loop through query results to get select options
-                                        while ($row=mysqli_fetch_assoc($result)) 
-                                        {
-                                            echo "<option value=".$row['sem'].">" . $row['sem'] . "</option>";
-                                        }
-                                    ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>        
-                    </div>
-
-                 </div>
-            <!-- /.container-fluid -->
+              
         <?php
             }
         ?>

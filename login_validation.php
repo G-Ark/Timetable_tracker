@@ -7,22 +7,22 @@ $user=$_POST['uname'];
 $pass=$_POST['pass'];
 //required values are in the user and pass variables
 
-$conn = mysql_connect('localhost', 'root', '');
-mysql_select_db('timetable', $conn);
+$con=mysqli_connect("localhost","root","","timetable");
+
 //connection with db established
 
-$username = mysql_real_escape_string($user);
+$username = mysqli_real_escape_string($con,$user);
 $query = "SELECT username, pw FROM login WHERE username = '$user';";
  
-$result = mysql_query($query);
-if(mysql_num_rows($result) == 0) // User not found. So, redirect to login_form again.
+$result = mysqli_query($con,$query);
+if(mysqli_num_rows($result) == 0) // User not found. So, redirect to login_form again.
 {
 	echo "Username invalid!Redirecting to login page.Please wait....";
 	header('Refresh:1,url= login.php');
 }//redirect to login for failed login
 else
 {
-	$row = mysql_fetch_array($result);
+	$row = mysqli_fetch_array($result);
 	if($row["username"]==$user && $row["pw"]==$pass)
 	{
 		echo"You are a validated user.";

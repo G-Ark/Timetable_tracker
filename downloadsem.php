@@ -59,7 +59,7 @@
                              
                             <div class="panel-body">
                                 <div class="alert alert-info">
-                                    <strong>Heads Up:</strong> The timetables generated will be stored in "**" folder with initials.
+                                    <strong>Heads Up:</strong> The timetables generated will be stored in "Downloads" folder of your browser.
                                 </div>
                                 <div class="form-group">
                                     <label>Sem:</label>

@@ -8,7 +8,9 @@
 </head>
 <?php
     if(isset($_SESSION['sess_username']))
-        echo "You can log out from the top right corner button!";
+    {
+         //   header('Refresh:0,url=index.php');
+    }
     else
     {   
 ?>

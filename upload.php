@@ -48,7 +48,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label>Sem:</label>
-                                        <select class="form-control">
+                                        <select class="form-control" name="sem" id="sem">
                                             <option>Sem</option>
                                             <?php
                                             $con=mysqli_connect("localhost","root","","timetable");
@@ -73,6 +73,7 @@
 
                                 <button type="submit" class="btn btn-default">Submit</button>
                             </div>
+                        </form>
                 </div>
                 </form>
                 

@@ -32,6 +32,58 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">View courses by time</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action="">
+                            <div class="form-group">
+                                <div class = "input-group">
+                                    <label>Enter Time of the day:</label>
+                                    <input class="form-control" placeholder="Enter time (Eg: 9:00)" id="time" name="time">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label> Select a semester : </label>
+                                    <select class = "form-control" name="sem" id="sem" onclick="checkAndSubmit()">
+                                    <option value=0>Semester</option>
+                                        <?php                   
+                                             $con=mysqli_connect("localhost","root","","timetable");
+                                             $query="SELECT distinct sem from class;";
+                                             $result=mysqli_query($con,$query);
+
+                                            while ($row=mysqli_fetch_assoc($result)) 
+                                            {
+                                                echo "<option value=".$row['sem'].">" . $row['sem'] . "</option>";
+                                             }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group"> 
+                                <div class="input-group"> 
+                                        <label> Select a day of the week: </label>
+                                            <select class = "form-control" name="day" id="day" onclick="checkAndSubmit()">
+                                                <option value=0>Day</option>
+                                                <option value="MON">MON</option>
+                                                <option value="TUE">TUE</option>
+                                                <option value="WED">WED</option>
+                                                <option value="THU">THU</option>
+                                                <option value="FRI">FRI</option>
+                                                <option value="SAT">SAT</option>
+                                            </select>
+                                </div>
+                            </div>  
+                            <button class="btn btn-default" name="check" onclick="checkAndSubmit()">Submit</button>
+                        </div>
+                    </div>
+                    </form>
+                 </div>
+            <!-- /.container-fluid -->
                 <?php
                     if(isset($_POST['time']) || isset($_POST['day']) || isset($_POST['sem']))
                     {
@@ -132,58 +184,7 @@
                     {
                     ?> 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">View courses by time</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form method="post" action="">
-                            <div class="form-group">
-                                <div class = "input-group">
-                                    <label>Enter Time of the day:</label>
-                                    <input class="form-control" placeholder="Enter time" id="time" name="time">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label> Select a semester : </label>
-                                    <select class = "form-control" name="sem" id="sem" onclick="checkAndSubmit()">
-                                    <option value=0>Semester</option>
-                                        <?php                   
-                                             $con=mysqli_connect("localhost","root","","timetable");
-                                             $query="SELECT distinct sem from class;";
-                                             $result=mysqli_query($con,$query);
-
-                                            while ($row=mysqli_fetch_assoc($result)) 
-                                            {
-                                                echo "<option value=".$row['sem'].">" . $row['sem'] . "</option>";
-                                             }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group"> 
-                                <div class="input-group"> 
-                                        <label> Select a day of the week: </label>
-                                            <select class = "form-control" name="day" id="day" onclick="checkAndSubmit()">
-                                                <option value=0>Day</option>
-                                                <option value="MON">MON</option>
-                                                <option value="TUE">TUE</option>
-                                                <option value="WED">WED</option>
-                                                <option value="THU">THU</option>
-                                                <option value="FRI">FRI</option>
-                                                <option value="SAT">SAT</option>
-                                            </select>
-                                </div>
-                            </div>  
-                            <button class="btn btn-default" name="check" onclick="checkAndSubmit()">Submit</button>
-                        </div>
-                    </div>
-                    </form>
-                 </div>
-            <!-- /.container-fluid -->
+               
             <?php
             }
             ?>

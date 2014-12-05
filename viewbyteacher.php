@@ -44,7 +44,32 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">View which teacher handles what class</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action="" name="teacher-form" id="teacher-form">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select class = "form-control" name="teacher" id="teacher" onclick="checkAndSubmit()">
+                                        <option value=0>Choose a teacher initial</option>
+                                            <?php
+                                                    $con=mysqli_connect("localhost","root","","timetable");
+                                                    $query="SELECT DISTINCT name from handles;";
+                                                    $result=mysqli_query($con,$query);
+                                                    while($row=mysqli_fetch_assoc($result))
+                                                    {
+                                                     echo "<option value=".$row['name'].">".$row['name']."</option>";
+                                                    }
+                                            ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
                 <?php
                     if(isset($_POST['teacher']))
                     {
@@ -119,31 +144,7 @@
                 {
     
                 ?>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">View which teacher handles what class</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form method="post" action="" name="teacher-form" id="teacher-form">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <select class = "form-control" name="teacher" id="teacher" onclick="checkAndSubmit()">
-                                        <option value=0>Choose a teacher initial</option>
-                                            <?php
-                                                    $con=mysqli_connect("localhost","root","","timetable");
-                                                    $query="SELECT DISTINCT name from handles;";
-                                                    $result=mysqli_query($con,$query);
-                                                    while($row=mysqli_fetch_assoc($result))
-                                                    {
-                                                     echo "<option value=".$row['name'].">".$row['name']."</option>";
-                                                    }
-                                            ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                
             <!-- /.container-fluid -->
             <?php
                 }

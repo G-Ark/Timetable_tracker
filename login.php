@@ -1,4 +1,10 @@
 <?php
+    ob_start();
+    session_start();
+    if(isset($_SESSION['sess_username']))
+    header('Refresh:0,url=index.php');
+    else
+    {
     include "navigation.php";
 ?>
 
@@ -6,14 +12,6 @@
 <head>
     <title>Login</title>
 </head>
-<?php
-    if(isset($_SESSION['sess_username']))
-    {
-         //   header('Refresh:0,url=index.php');
-    }
-    else
-    {   
-?>
 <body>
     <div id="wrapper">
         <div id="page-wrapper">

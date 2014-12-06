@@ -44,20 +44,20 @@ else if(isset($result) and $result != FALSE)
 			$subject=$row['sub'];
 			$day=$row['day'];
 			$sem=$row['sem'];
-			$subject=$subject."(".$sem.")";
-			write_to_file($start_time,$end_time,$day,$subject); //to define a function for this
+			write_to_file($start_time,$end_time,$day,$subject,$sem); //to define a function for this
 		}//end while
 	}//end num_rows >0 condition
 }//end set of result
 
 //function to write to Excel file and sheet
-function write_to_file($start,$end,$day,$matter)
+function write_to_file($start,$end,$day,$matter,$sem)
 {
 	$teacher=$_GET['teacher'];
 	$fname="PersonalTT/".$teacher.".xlsx";
 	$objReader = PHPExcel_IOFactory::createReader('Excel2007');
 	$objPHPExcel = $objReader->load($fname);
 	$objPHPExcel->setActiveSheetIndex(0);
+	$subject=$matter."(".$sem.")";
 	switch($day)
 	{
 		case 'MON':$row=4;break;
@@ -81,8 +81,9 @@ function write_to_file($start,$end,$day,$matter)
 		case '11:15':$col='D';$row++;break;
 		case '12:05':$col='E';$row++;break;
 		case '12:55':$col='F';$row++;break;
-		case '2:20':$col='H';$row++;break;
+		case '2:20':$col='G';$row++;break;
 		case '3:10':$col='H';$row++;break;
+		case '3:55':$col='I';$row++;break;
 	}
 	$cell=$col.$row;
 	//get matches for labs and merge cells accordingly
@@ -94,7 +95,7 @@ function write_to_file($start,$end,$day,$matter)
 		$limit=$cols.":".$cole;
 		$objPHPExcel->setActiveSheetIndex(0)->mergeCells($limit);
 	}
-	$objPHPExcel->getActiveSheet()->SetCellValue($cell,$matter);
+	$objPHPExcel->getActiveSheet()->SetCellValue($cell,$subject);
 	$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
 	$fname="PersonalTT/".$teacher.".xlsx";
 	$objWriter->save($fname);

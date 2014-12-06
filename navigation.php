@@ -90,9 +90,6 @@
                     {
                     ?>
                         <li>
-                            <a href="logout.php"><i class="fa fa-fw fa-lock"></i>Logout</a>
-                        </li>
-                        <li>
                         <a href="upload.php"><i class="fa fa-fw fa-upload"></i>Upload</a>
                         </li>
                         <li>
@@ -134,7 +131,6 @@
                         <li>
                             <a href="edit.php"><i class="fa fa-fw fa-wrench"></i>Edit</a>
                         </li>
-
                     <?php
                     }
                     else
@@ -155,6 +151,9 @@
                     ?>             
                     <li>
                         <a href="clear.php"><i class="fa fa-fw fa-file"></i>Clear</a>
+                    </li>
+                    <li>
+                        <a href="logout.php"><i class="fa fa-fw fa-lock"></i>Logout</a>
                     </li>
                     <?php
                     }
